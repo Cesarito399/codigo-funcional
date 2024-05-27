@@ -1,0 +1,21 @@
+#include "HX711.h"
+
+// Configura los pines de conexión al módulo HX711
+#define DOUT  4
+#define CLK  5
+
+HX711 balanza;
+
+void setup() {
+  Serial.begin(9600);
+  balanza.begin(DOUT, CLK);
+  balanza.set_scale(2280.f); // este valor es específico para tu balanza, necesitarás calibrarlo
+  balanza.tare(); // Asume que la balanza está vacía al inicio
+}
+
+void loop() {
+  float peso = balanza.get_units(5); // Lee el peso de la balanza
+  Serial.print("Peso: ");
+  Serial.println(peso);
+  delay(2000);
+}
